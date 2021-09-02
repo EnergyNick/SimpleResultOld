@@ -1,0 +1,4 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleResult.Core", "SimpleResult.Core\SimpleResult.Core.csproj", "{71FD9354-A244-408C-86A3-4BE647F81A71}"
+EndProject
