@@ -1,6 +1,7 @@
 ﻿using System;
 using SimpleResult.Core;
 using SimpleResult.Core.Converters;
+using SimpleResult.Core.Exceptions;
 
 namespace SimpleResult.Converters
 {
@@ -14,15 +15,15 @@ namespace SimpleResult.Converters
 
         public Result<TNewValue> ToResultWithValueConverting<TNewValue>(Func<TValue, TNewValue> converter)
         {
-            if (converter == null)
+            if (Target.IsSuccess && converter == null)
                 throw new ArgumentNullException(nameof(converter));
 
-            if (!Target.IsSuccess)
-                throw new InvalidOperationException(
-                    "The value cannot be converted because the result is unsuccessful.");
-
-            var target = ((Result<TValue>) Target);
-            return new Result<TNewValue> { Reasons = Target.Reasons, Value = converter(target.Value) };
+            var target = (Result<TValue>) Target;
+            return new Result<TNewValue>
+            {
+                Reasons = Target.Reasons, 
+                Value = target.IsSuccess ? converter(target.ValueOrDefault) : default
+            };
         }
 
         IResult IResultConverter<TValue>.ToResult() => ToResult();
