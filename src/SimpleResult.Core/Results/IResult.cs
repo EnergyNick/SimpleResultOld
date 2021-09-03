@@ -33,9 +33,6 @@ namespace SimpleResult.Core
         /// <typeparam name="TError">Type of searching error</typeparam>
         bool HasError<TError>(Func<TError, bool> predicate = null) where TError : IError;
 
-        /// <summary>
-        /// Provides ability to convert to another form of result
-        /// </summary>
-        IResultConverter Convert { get; }
+        IResult<TNewValue> ToResult<TNewValue>(TNewValue value = default);
     }
 }

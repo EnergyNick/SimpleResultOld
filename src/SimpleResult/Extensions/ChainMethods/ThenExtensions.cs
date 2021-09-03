@@ -22,14 +22,14 @@ namespace SimpleResult
         {
             return input.IsSuccess
                 ? continuation().AsResult()
-                : input.Convert.ToResultWithValue<TOutput>();
+                : input.ToResult<TOutput>();
         }
         
         public static Result<TOutput> Then<TOutput>(this Result input, Func<Result<TOutput>> continuation)
         {
             return input.IsSuccess
                 ? continuation()
-                : input.Convert.ToResultWithValue<TOutput>();
+                : input.ToResult<TOutput>();
         }
 
         public static Result<TOutput> Then<TInput, TOutput>(this Result<TInput> input,
@@ -37,7 +37,7 @@ namespace SimpleResult
         {
             return input.IsSuccess
                 ? continuation(input.ValueOrDefault).AsResult()
-                : input.Convert.ToResultWithValue<TOutput>();
+                : input.ToResult<TOutput>();
         }
         
         public static Result<TOutput> Then<TInput, TOutput>(this Result<TInput> input,
@@ -45,7 +45,7 @@ namespace SimpleResult
         {
             return input.IsSuccess
                 ? continuation(input.ValueOrDefault)
-                : input.Convert.ToResultWithValue<TOutput>();
+                : input.ToResult<TOutput>();
         }
     }
 }

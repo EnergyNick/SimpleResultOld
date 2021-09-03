@@ -1,4 +1,5 @@
-﻿using SimpleResult.Core.Converters;
+﻿using System;
+using SimpleResult.Core.Converters;
 using SimpleResult.Core.Exceptions;
 
 namespace SimpleResult.Core
@@ -15,10 +16,8 @@ namespace SimpleResult.Core
         /// Return current result value (If result has failed status return default value)
         /// </summary>
         TValue ValueOrDefault { get; }
-        
-        /// <summary>
-        /// Provides ability to convert to another form of result
-        /// </summary>
-        new IResultConverter<TValue> Convert { get; }
+
+        IResult ToResult();
+        IResult<TNewValue> ToResultWithValueConverting<TNewValue>(Func<TValue, TNewValue> converter);
     }
 }
