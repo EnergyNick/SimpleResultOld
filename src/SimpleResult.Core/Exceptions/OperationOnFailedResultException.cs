@@ -3,7 +3,7 @@
 namespace SimpleResult.Exceptions
 {
     /// <summary>
-    /// Thrown when 
+    /// Thrown when operation invoked on unsuccessful result
     /// </summary>
     public class OperationOnFailedResultException : ResultException
     {
