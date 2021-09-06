@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SimpleResult.Core;
 using SimpleResult.Core.Manipulations;
+using SimpleResult.Extensions;
 
 namespace SimpleResult
 {

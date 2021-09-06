@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SimpleResult
+namespace SimpleResult.Extensions
 {
     public static partial class ResultsExtensions
     {
@@ -21,7 +21,7 @@ namespace SimpleResult
         public static Result<TOutput> Then<TOutput>(this Result input, Func<TOutput> continuation)
         {
             return input.IsSuccess
-                ? continuation().AsResult()
+                ? continuation().ToResult()
                 : input.ToResult<TOutput>();
         }
         
@@ -36,7 +36,7 @@ namespace SimpleResult
             Func<TInput, TOutput> continuation)
         {
             return input.IsSuccess
-                ? continuation(input.ValueOrDefault).AsResult()
+                ? continuation(input.ValueOrDefault).ToResult()
                 : input.ToResult<TOutput>();
         }
         

@@ -11,12 +11,15 @@ namespace SimpleResult.Settings
         /// Current parameters used in Results
         /// </summary>
         public static ResultParameters Parameters { get; private set; }
-
+        
         static ResultSettings()
         {
             Parameters = GetDefaultParameters();
         }
         
+        /// <summary>
+        /// Thread-safe parameters modification for results
+        /// </summary>
         public static void SetupParameters(Func<ResultParameters, ResultParameters> settingsChangeFunction)
         {
             lock (Parameters)
@@ -24,7 +27,7 @@ namespace SimpleResult.Settings
                 Parameters = settingsChangeFunction(Parameters);
             }
         }
-
+        
         public static ResultParameters GetDefaultParameters() => new()
         {
             DefaultTryCatchHandler = ex => new ExceptionalError(ex)

@@ -1,5 +1,5 @@
 ﻿using System;
-using SimpleResult.Core.Exceptions;
+using SimpleResult.Exceptions;
 
 namespace SimpleResult.Core
 {
@@ -8,7 +8,7 @@ namespace SimpleResult.Core
         /// <summary>
         /// Return current result value (If result has failed status thrown exception) 
         /// </summary>
-        /// <exception cref="FailedResultOperationException">Thrown if result has failed status</exception>
+        /// <exception cref="OnFailedResultOperationException">Thrown if result has failed status</exception>
         TValue Value { get; }
         
         /// <summary>

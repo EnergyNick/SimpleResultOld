@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using SimpleResult.Core;
-using SimpleResult.Core.Exceptions;
 using SimpleResult.Core.Manipulations;
+using SimpleResult.Exceptions;
 
 namespace SimpleResult
 {
@@ -24,14 +24,14 @@ namespace SimpleResult
             get
             {
                 if (!IsSuccess)
-                    throw new FailedResultOperationException("Get value");
+                    throw new OnFailedResultOperationException("Get value");
 
                 return _value;
             }
             set
             {
                 if (!IsSuccess)
-                    throw new FailedResultOperationException("Set value");
+                    throw new OnFailedResultOperationException("Set value");
 
                 _value = value;
             }

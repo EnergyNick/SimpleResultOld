@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SimpleResult.Core;
 
-namespace SimpleResult
+namespace SimpleResult.Extensions
 {
     public static class ReasonExtensions
     {

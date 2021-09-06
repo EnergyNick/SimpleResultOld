@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace SimpleResult
+namespace SimpleResult.Extensions
 {
     public static partial class ResultsExtensions
     {
@@ -12,7 +12,7 @@ namespace SimpleResult
             return input;
         }
 
-        public static async Task<Result<TValue>> ThenActionAsync<TValue>(this Result<TValue> input, 
+        public static async Task<Result> ThenActionAsync<TValue>(this Result<TValue> input, 
             Func<TValue, Task> continuation)
         {
             if (input.IsSuccess)
@@ -20,7 +20,7 @@ namespace SimpleResult
             return input;
         }
 
-        public static async Task<Result<TOutput>> ThenAsync<TOutput>(this Result input, 
+        public static async Task<Result> ThenAsync<TOutput>(this Result input, 
             Func<Task<TOutput>> continuation)
         {
             return input.IsSuccess
@@ -28,15 +28,15 @@ namespace SimpleResult
                 : input.ToResult<TOutput>();
         }
         
-        public static async Task<Result<TOutput>> ThenAsync<TOutput>(this Result input, 
-            Func<Task<Result<TOutput>>> continuation)
+        public static async Task<Result> ThenAsync<TOutput>(this Result input, 
+            Func<Task<Result>> continuation)
         {
             return input.IsSuccess
                 ? await continuation()
                 : input.ToResult<TOutput>();
         }
 
-        public static async Task<Result<TOutput>> ThenAsync<TInput, TOutput>(this Result<TInput> input,
+        public static async Task<Result> ThenAsync<TInput, TOutput>(this Result<TInput> input,
             Func<TInput, Task<TOutput>> continuation)
         {
             return input.IsSuccess
@@ -44,8 +44,8 @@ namespace SimpleResult
                 : input.ToResult<TOutput>();
         }
         
-        public static async Task<Result<TOutput>> ThenAsync<TInput, TOutput>(this Result<TInput> input,
-            Func<TInput, Task<Result<TOutput>>> continuation)
+        public static async Task<Result> ThenAsync<TInput, TOutput>(this Result<TInput> input,
+            Func<TInput, Task<Result>> continuation)
         {
             return input.IsSuccess
                 ? await continuation(input.ValueOrDefault)

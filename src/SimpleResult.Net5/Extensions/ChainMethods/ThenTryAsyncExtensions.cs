@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using SimpleResult.Settings;
 
-namespace SimpleResult
+namespace SimpleResult.Extensions
 {
     public static partial class ResultsExtensions
     {
@@ -13,45 +13,45 @@ namespace SimpleResult
             return await InternalTryAsync(() => input.ThenActionAsync(continuation), input.WithError, catchHandler);
         }
 
-        public static async Task<Result<TOutput>> ThenTryActionAsync<TOutput>(this Result<TOutput> input, 
+        public static async Task<Result> ThenTryActionAsync<TOutput>(this Result<TOutput> input, 
             Func<TOutput, Task> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return await InternalTryAsync(() => input.ThenActionAsync(continuation), input.WithError, catchHandler);
+            return await InternalTryAsync<Result>(() => input.ThenActionAsync(continuation), input.WithError, catchHandler);
         }
 
-        public static async Task<Result<TOutput>> ThenTryAsync<TOutput>(this Result input, 
+        public static async Task<Result> ThenTryAsync<TOutput>(this Result input, 
             Func<Task<TOutput>> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return await InternalTryAsync(() => input.ThenAsync(continuation), 
+            return await InternalTryAsync<Result>(() => input.ThenAsync(continuation), 
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error),
                 catchHandler);
         }
         
-        public static async Task<Result<TOutput>> ThenTryAsync<TOutput>(this Result input, 
-            Func<Task<Result<TOutput>>> continuation,
+        public static async Task<Result> ThenTryAsync<TOutput>(this Result input, 
+            Func<Task<Result>> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return await InternalTryAsync(() => input.ThenAsync(continuation), 
+            return await InternalTryAsync<Result>(() => input.ThenAsync(continuation), 
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error),
                 catchHandler);
         }
         
-        public static async Task<Result<TOutput>> ThenTryAsync<TInput, TOutput>(this Result<TInput> input,
-            Func<TInput, Task<Result<TOutput>>> continuation,
+        public static async Task<Result> ThenTryAsync<TInput, TOutput>(this Result<TInput> input,
+            Func<TInput, Task<Result>> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return await InternalTryAsync(() => input.ThenAsync(continuation), 
+            return await InternalTryAsync<Result>(() => input.ThenAsync(continuation), 
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error), 
                 catchHandler);
         }
 
-        public static async Task<Result<TOutput>> ThenTryAsync<TInput, TOutput>(this Result<TInput> input,
+        public static async Task<Result> ThenTryAsync<TInput, TOutput>(this Result<TInput> input,
             Func<TInput, Task<TOutput>> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return await InternalTryAsync(() => input.ThenAsync(continuation), 
+            return await InternalTryAsync<Result>(() => input.ThenAsync(continuation), 
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error), 
                 catchHandler);
         }

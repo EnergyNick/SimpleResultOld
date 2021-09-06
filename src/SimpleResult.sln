@@ -1,8 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleResult.Core", "SimpleResult.Core\SimpleResult.Core.csproj", "{71FD9354-A244-408C-86A3-4BE647F81A71}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleResult", "SimpleResult\SimpleResult.csproj", "{71FD9354-A244-408C-86A3-4BE647F81A71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleResult", "SimpleResult\SimpleResult.csproj", "{CA508304-F4FE-4D93-833B-7699C960B60E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleResult.Net5", "SimpleResult.Net5\SimpleResult.Net5.csproj", "{CA508304-F4FE-4D93-833B-7699C960B60E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
