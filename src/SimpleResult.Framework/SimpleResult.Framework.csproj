@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net45;net461;netstandard1.1;netstandard2.0</TargetFrameworks>
+        <RootNamespace>SimpleResult</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SimpleResult.Core\SimpleResult.Core.csproj" />
+    </ItemGroup>
+
+</Project>
