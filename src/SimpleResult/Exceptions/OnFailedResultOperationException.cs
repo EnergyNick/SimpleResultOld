@@ -1,8 +1,11 @@
 ﻿using System;
 
-namespace SimpleResult.Core.Exceptions
+namespace SimpleResult.Exceptions
 {
-    public class FailedResultOperationException : FailedResultException
+    /// <summary>
+    /// Thrown when 
+    /// </summary>
+    public class OnFailedResultOperationException : ResultException
     {
         private const string ExceptionMessage = "Result is in failed status, can't do operation";
 
@@ -15,18 +18,18 @@ namespace SimpleResult.Core.Exceptions
             return message;
         }
 
-        public FailedResultOperationException(string operationName) : base(FailedResultMessage(operationName))
+        public OnFailedResultOperationException(string operationName) : base(FailedResultMessage(operationName))
         { }
 
-        public FailedResultOperationException(string operationName, Exception innerException) 
+        public OnFailedResultOperationException(string operationName, Exception innerException) 
             : base(FailedResultMessage(operationName), innerException)
         { }
         
-        public FailedResultOperationException(string message, string operationName) 
+        public OnFailedResultOperationException(string message, string operationName) 
             : base(FailedResultMessage(operationName) + message)
         { }
 
-        public FailedResultOperationException(string message, string operationName, Exception innerException) 
+        public OnFailedResultOperationException(string message, string operationName, Exception innerException) 
             : base(FailedResultMessage(operationName) + message, innerException)
         { }
     }
