@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SimpleResult.Converters;
 using SimpleResult.Core;
-using SimpleResult.Core.Converters;
 using SimpleResult.Core.Manipulations;
+using SimpleResult.Extensions;
 
 namespace SimpleResult
 {
@@ -18,22 +17,13 @@ namespace SimpleResult
             get => _reasons;
             init => AddReasonsAndUpdateResult(value);
         }
-        
-        protected ResultConverter Converter;
-        protected virtual ResultConverter GetResultConverter() => new(this);
-        public virtual ResultConverter Convert => Converter;
 
         public IReadOnlyList<IError> Errors => Reasons.OfType<IError>().ToList();
-
-
+        
         public Result()
         {
             _reasons = new List<IReason>();
             IsSuccess = true;
-            
-            // That method using only for create typed convertor without using any derived variables for that
-            // ReSharper disable once VirtualMemberCallInConstructor
-            Converter = GetResultConverter();
         }
 
         public bool HasReason<TReason>(Func<TReason, bool> predicate = null) where TReason : IReason
@@ -44,6 +34,11 @@ namespace SimpleResult
         public bool HasError<TError>(Func<TError, bool> predicate = null) where TError : IError
         {
             return Errors.HasErrorOfType(predicate);
+        }
+        
+        public virtual Result<TNewValue> ToResult<TNewValue>(TNewValue value = default)
+        {
+            return new Result<TNewValue> { Reasons = _reasons, Value = value };
         }
 
         public virtual Result WithReason(IReason reason)
@@ -82,8 +77,7 @@ namespace SimpleResult
             AddReasonsAndUpdateResult(errors);
             return this;
         }
-        
-        
+
 
         internal void AddReasonAndUpdateResult(IReason newReason)
         {
@@ -99,6 +93,6 @@ namespace SimpleResult
             IsSuccess = IsSuccess && !enumeratedReasons.OfType<IError>().Any();
         }
         
-        IResultConverter IResult.Convert => Converter;
+        IResult<TNewValue> IResult.ToResult<TNewValue>(TNewValue value) => ToResult(value);
     }
 }

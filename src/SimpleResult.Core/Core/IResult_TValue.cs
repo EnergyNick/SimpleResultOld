@@ -1,5 +1,5 @@
-﻿using SimpleResult.Core.Converters;
-using SimpleResult.Core.Exceptions;
+﻿using System;
+using SimpleResult.Exceptions;
 
 namespace SimpleResult.Core
 {
@@ -8,17 +8,22 @@ namespace SimpleResult.Core
         /// <summary>
         /// Return current result value (If result has failed status thrown exception) 
         /// </summary>
-        /// <exception cref="FailedResultOperationException">Thrown if result has failed status</exception>
+        /// <exception cref="OperationOnFailedResultException">Thrown if result has failed status</exception>
         TValue Value { get; }
         
         /// <summary>
         /// Return current result value (If result has failed status return default value)
         /// </summary>
         TValue ValueOrDefault { get; }
+
+        /// <summary>
+        /// Provide conversion with same reasons to <see cref="IResult"/>
+        /// </summary>
+        IResult ToResult();
         
         /// <summary>
-        /// Provides ability to convert to another form of result
+        /// Provide conversion with same reasons and value changing
         /// </summary>
-        new IResultConverter<TValue> Convert { get; }
+        IResult<TNewValue> ToResultWithValueConverting<TNewValue>(Func<TValue, TNewValue> converter);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace SimpleResult.Settings
 {
-    public class ResultParameters
+    public partial class ResultParameters
     {
         public Func<Exception, Error> DefaultTryCatchHandler { get; set; }
     }

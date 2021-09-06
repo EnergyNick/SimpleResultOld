@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SimpleResult.Core.Converters;
 
 namespace SimpleResult.Core
 {
@@ -34,8 +33,8 @@ namespace SimpleResult.Core
         bool HasError<TError>(Func<TError, bool> predicate = null) where TError : IError;
 
         /// <summary>
-        /// Provides ability to convert to another form of result
+        /// Provide conversion with same reasons to <see cref="IResult{TNewValue}"/>
         /// </summary>
-        IResultConverter Convert { get; }
+        IResult<TNewValue> ToResult<TNewValue>(TNewValue value = default);
     }
 }

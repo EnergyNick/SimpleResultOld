@@ -1,14 +1,12 @@
-﻿namespace SimpleResult
+﻿namespace SimpleResult.Extensions
 {
     public static class ObjectExtensions
     {
-        public static Result<TValue> AsResult<TValue>(this TValue value)
+        public static Result<TValue> ToResult<TValue>(this TValue value)
         {
-            if (value is Result result)
-                return result.Convert.ToResultWithValue(value);
-            
-            return new Result<TValue>()
-                .WithValue(value);
+            return value is Result result 
+                ? result.ToResult(value) 
+                : Result.Success(value);
         }
     }
 }

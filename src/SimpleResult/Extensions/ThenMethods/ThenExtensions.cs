@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace SimpleResult
+namespace SimpleResult.Extensions
 {
-    public static partial class ResultsExtensions
+    public static partial class ResultsThenExtensions
     {
         public static Result ThenAction(this Result input, Action continuation)
         {
@@ -21,23 +21,23 @@ namespace SimpleResult
         public static Result<TOutput> Then<TOutput>(this Result input, Func<TOutput> continuation)
         {
             return input.IsSuccess
-                ? continuation().AsResult()
-                : input.Convert.ToResultWithValue<TOutput>();
+                ? continuation().ToResult()
+                : input.ToResult<TOutput>();
         }
         
         public static Result<TOutput> Then<TOutput>(this Result input, Func<Result<TOutput>> continuation)
         {
             return input.IsSuccess
                 ? continuation()
-                : input.Convert.ToResultWithValue<TOutput>();
+                : input.ToResult<TOutput>();
         }
 
         public static Result<TOutput> Then<TInput, TOutput>(this Result<TInput> input,
             Func<TInput, TOutput> continuation)
         {
             return input.IsSuccess
-                ? continuation(input.ValueOrDefault).AsResult()
-                : input.Convert.ToResultWithValue<TOutput>();
+                ? continuation(input.ValueOrDefault).ToResult()
+                : input.ToResult<TOutput>();
         }
         
         public static Result<TOutput> Then<TInput, TOutput>(this Result<TInput> input,
@@ -45,7 +45,7 @@ namespace SimpleResult
         {
             return input.IsSuccess
                 ? continuation(input.ValueOrDefault)
-                : input.Convert.ToResultWithValue<TOutput>();
+                : input.ToResult<TOutput>();
         }
     }
 }

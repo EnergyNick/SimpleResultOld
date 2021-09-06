@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using SimpleResult.Settings;
 
-namespace SimpleResult
+namespace SimpleResult.Extensions
 {
-    public static partial class ResultsExtensions
+    public static partial class ResultsThenExtensions
     {
         public static async Task<Result> ThenTryActionAsync(this Result input, 
             Func<Task> continuation,

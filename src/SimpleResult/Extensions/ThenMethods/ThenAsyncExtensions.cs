@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace SimpleResult
+namespace SimpleResult.Extensions
 {
-    public static partial class ResultsExtensions
+    public static partial class ResultsThenExtensions
     {
         public static async Task<Result> ThenActionAsync(this Result input, Func<Task> continuation)
         {
@@ -25,7 +25,7 @@ namespace SimpleResult
         {
             return input.IsSuccess
                 ? Result.Success(await continuation())
-                : input.Convert.ToResultWithValue<TOutput>();
+                : input.ToResult<TOutput>();
         }
         
         public static async Task<Result<TOutput>> ThenAsync<TOutput>(this Result input, 
@@ -33,7 +33,7 @@ namespace SimpleResult
         {
             return input.IsSuccess
                 ? await continuation()
-                : input.Convert.ToResultWithValue<TOutput>();
+                : input.ToResult<TOutput>();
         }
 
         public static async Task<Result<TOutput>> ThenAsync<TInput, TOutput>(this Result<TInput> input,
@@ -41,7 +41,7 @@ namespace SimpleResult
         {
             return input.IsSuccess
                 ? Result.Success(await continuation(input.ValueOrDefault))
-                : input.Convert.ToResultWithValue<TOutput>();
+                : input.ToResult<TOutput>();
         }
         
         public static async Task<Result<TOutput>> ThenAsync<TInput, TOutput>(this Result<TInput> input,
@@ -49,7 +49,7 @@ namespace SimpleResult
         {
             return input.IsSuccess
                 ? await continuation(input.ValueOrDefault)
-                : input.Convert.ToResultWithValue<TOutput>();
+                : input.ToResult<TOutput>();
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using SimpleResult.Converters;
+﻿using System;
+using System.Collections.Generic;
 using SimpleResult.Core;
-using SimpleResult.Core.Converters;
-using SimpleResult.Core.Exceptions;
 using SimpleResult.Core.Manipulations;
+using SimpleResult.Exceptions;
 
 namespace SimpleResult
 {
@@ -16,9 +15,6 @@ namespace SimpleResult
         /// </summary>
         public TValue ValueOrDefault => _value;
 
-        protected override ResultConverter GetResultConverter() => new ResultConverter<TValue>(this);
-        public override ResultConverter<TValue> Convert => (ResultConverter<TValue>) Converter;
-
         /// <summary>
         /// Get the Value. If result is failed then an Exception is thrown because a failed result has no value.
         /// Opposite see property <see cref="ValueOrDefault"/>.
@@ -28,14 +24,14 @@ namespace SimpleResult
             get
             {
                 if (!IsSuccess)
-                    throw new FailedResultOperationException("Get value");
+                    throw new OperationOnFailedResultException("Get value");
 
                 return _value;
             }
             set
             {
                 if (!IsSuccess)
-                    throw new FailedResultOperationException("Set value");
+                    throw new OperationOnFailedResultException("Set value");
 
                 _value = value;
             }
@@ -44,7 +40,20 @@ namespace SimpleResult
         public Result()
         {
             _value = default;
-            Converter = new ResultConverter<TValue>(this);
+        }
+        
+        public Result ToResult() => new() { Reasons = Reasons };
+
+        public Result<TNewValue> ToResultWithValueConverting<TNewValue>(Func<TValue, TNewValue> converter)
+        {
+            if (IsSuccess && converter == null)
+                throw new ArgumentNullException(nameof(converter));
+            
+            return new Result<TNewValue>
+            {
+                Reasons = Reasons, 
+                Value = IsSuccess ? converter(_value) : default
+            };
         }
 
         public override Result<TValue> WithReason(IReason reason) => 
@@ -71,7 +80,11 @@ namespace SimpleResult
             Value = value;
             return this;
         }
-        
-        IResultConverter<TValue> IResult<TValue>.Convert => Convert;
+
+        IResult IResult<TValue>.ToResult() => ToResult();
+
+        IResult<TNewValue> IResult<TValue>.
+            ToResultWithValueConverting<TNewValue>(Func<TValue, TNewValue> converter) =>
+            ToResultWithValueConverting(converter);
     }
 }
