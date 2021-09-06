@@ -16,14 +16,14 @@ namespace SimpleResult.Extensions
             Action<TOutput> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry<Result<TOutput>>(() => input.ThenAction(continuation), input.WithError, catchHandler);
+            return InternalTry(() => input.ThenAction(continuation), input.WithError, catchHandler);
         }
 
         public static Result<TOutput> ThenTry<TOutput>(this Result input, 
             Func<TOutput> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry<Result<TOutput>>(() => input.Then(continuation), 
+            return InternalTry(() => input.Then(continuation), 
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error),
                 catchHandler);
         }
@@ -32,7 +32,7 @@ namespace SimpleResult.Extensions
             Func<Result<TOutput>> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry<Result<TOutput>>(() => input.Then(continuation), 
+            return InternalTry(() => input.Then(continuation), 
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error),
                 catchHandler);
         }
@@ -41,7 +41,7 @@ namespace SimpleResult.Extensions
             Func<TInput, Result<TOutput>> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry<Result<TOutput>>(() => input.Then(continuation), 
+            return InternalTry(() => input.Then(continuation), 
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error), 
                 catchHandler);
         }
@@ -50,7 +50,7 @@ namespace SimpleResult.Extensions
             Func<TInput, TOutput> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry<Result<TOutput>>(() => input.Then(continuation), 
+            return InternalTry(() => input.Then(continuation), 
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error), 
                 catchHandler);
         }
