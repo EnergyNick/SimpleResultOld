@@ -5,7 +5,7 @@ namespace SimpleResult.Exceptions
     /// <summary>
     /// Thrown when 
     /// </summary>
-    public class OnFailedResultOperationException : ResultException
+    public class OperationOnFailedResultException : ResultException
     {
         private const string ExceptionMessage = "Result is in failed status, can't do operation";
 
@@ -18,18 +18,18 @@ namespace SimpleResult.Exceptions
             return message;
         }
 
-        public OnFailedResultOperationException(string operationName) : base(FailedResultMessage(operationName))
+        public OperationOnFailedResultException(string operationName) : base(FailedResultMessage(operationName))
         { }
 
-        public OnFailedResultOperationException(string operationName, Exception innerException) 
+        public OperationOnFailedResultException(string operationName, Exception innerException) 
             : base(FailedResultMessage(operationName), innerException)
         { }
         
-        public OnFailedResultOperationException(string message, string operationName) 
+        public OperationOnFailedResultException(string message, string operationName) 
             : base(FailedResultMessage(operationName) + message)
         { }
 
-        public OnFailedResultOperationException(string message, string operationName, Exception innerException) 
+        public OperationOnFailedResultException(string message, string operationName, Exception innerException) 
             : base(FailedResultMessage(operationName) + message, innerException)
         { }
     }

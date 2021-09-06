@@ -8,7 +8,7 @@ namespace SimpleResult.Core
         /// <summary>
         /// Return current result value (If result has failed status thrown exception) 
         /// </summary>
-        /// <exception cref="OnFailedResultOperationException">Thrown if result has failed status</exception>
+        /// <exception cref="OperationOnFailedResultException">Thrown if result has failed status</exception>
         TValue Value { get; }
         
         /// <summary>

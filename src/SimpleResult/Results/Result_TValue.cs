@@ -24,14 +24,14 @@ namespace SimpleResult
             get
             {
                 if (!IsSuccess)
-                    throw new OnFailedResultOperationException("Get value");
+                    throw new OperationOnFailedResultException("Get value");
 
                 return _value;
             }
             set
             {
                 if (!IsSuccess)
-                    throw new OnFailedResultOperationException("Set value");
+                    throw new OperationOnFailedResultException("Set value");
 
                 _value = value;
             }
