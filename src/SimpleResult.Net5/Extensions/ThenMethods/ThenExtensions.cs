@@ -2,7 +2,7 @@
 
 namespace SimpleResult.Extensions
 {
-    public static partial class ResultsExtensions
+    public static partial class ResultsThenExtensions
     {
         public static Result ThenAction(this Result input, Action continuation)
         {

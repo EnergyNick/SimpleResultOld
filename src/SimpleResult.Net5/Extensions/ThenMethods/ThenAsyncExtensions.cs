@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace SimpleResult.Extensions
 {
-    public static partial class ResultsExtensions
+    public static partial class ResultsThenExtensions
     {
         public static async Task<Result> ThenActionAsync(this Result input, Func<Task> continuation)
         {
