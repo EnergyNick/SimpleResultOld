@@ -1,5 +1,4 @@
 ﻿using System;
-using SimpleResult.Core.Converters;
 using SimpleResult.Core.Exceptions;
 
 namespace SimpleResult.Core
@@ -17,7 +16,14 @@ namespace SimpleResult.Core
         /// </summary>
         TValue ValueOrDefault { get; }
 
+        /// <summary>
+        /// Provide conversion with same reasons to <see cref="IResult"/>
+        /// </summary>
         IResult ToResult();
+        
+        /// <summary>
+        /// Provide conversion with same reasons and value changing
+        /// </summary>
         IResult<TNewValue> ToResultWithValueConverting<TNewValue>(Func<TValue, TNewValue> converter);
     }
 }

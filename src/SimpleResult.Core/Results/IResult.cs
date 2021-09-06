@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SimpleResult.Core.Converters;
 
 namespace SimpleResult.Core
 {
@@ -33,6 +32,9 @@ namespace SimpleResult.Core
         /// <typeparam name="TError">Type of searching error</typeparam>
         bool HasError<TError>(Func<TError, bool> predicate = null) where TError : IError;
 
+        /// <summary>
+        /// Provide conversion with same reasons to <see cref="IResult{TNewValue}"/>
+        /// </summary>
         IResult<TNewValue> ToResult<TNewValue>(TNewValue value = default);
     }
 }
