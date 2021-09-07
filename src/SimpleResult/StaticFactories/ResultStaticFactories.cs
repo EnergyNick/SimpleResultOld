@@ -10,7 +10,7 @@ namespace SimpleResult
         /// <summary>
         /// Create empty result with success status
         /// </summary>
-        public static Result Ok() => new();
+        public static Result Ok() => new Result();
 
         /// <summary>
         /// Creates a failed result with the given error
@@ -76,7 +76,7 @@ namespace SimpleResult
             }
             catch (Exception e)
             {
-                catchHandler ??= ResultSettings.Parameters.DefaultTryCatchHandler;
+                catchHandler = catchHandler ?? ResultSettings.Parameters.DefaultTryCatchHandler;
 
                 return Fail(catchHandler(e));
             }
@@ -95,7 +95,7 @@ namespace SimpleResult
             }
             catch (Exception e)
             {
-                catchHandler ??= ResultSettings.Parameters.DefaultTryCatchHandler;
+                catchHandler = catchHandler ?? ResultSettings.Parameters.DefaultTryCatchHandler;
 
                 return Fail(catchHandler(e));
             }
@@ -113,7 +113,7 @@ namespace SimpleResult
             }
             catch (Exception e)
             {
-                catchHandler ??= ResultSettings.Parameters.DefaultTryCatchHandler;
+                catchHandler = catchHandler ?? ResultSettings.Parameters.DefaultTryCatchHandler;
 
                 return Fail<T>(catchHandler(e));
             }
@@ -131,7 +131,7 @@ namespace SimpleResult
             }
             catch (Exception e)
             {
-                catchHandler ??= ResultSettings.Parameters.DefaultTryCatchHandler;
+                catchHandler = catchHandler ?? ResultSettings.Parameters.DefaultTryCatchHandler;
 
                 return Fail<T>(catchHandler(e));
             }

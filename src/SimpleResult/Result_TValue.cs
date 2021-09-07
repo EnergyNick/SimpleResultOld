@@ -34,21 +34,21 @@ namespace SimpleResult
         {
             _value = value;
         }
-
-        public Result ToResult() => new() { Reasons = Reasons };
+        
+        public Result ToResult() => new Result().WithReasons(Reasons);
 
         public Result<TNewValue> ToResultWithValueConverting<TNewValue>(Func<TValue, TNewValue> converter)
         {
             if (IsSuccess && converter == null)
                 throw new ArgumentNullException(nameof(converter));
             
-            return new Result<TNewValue>
-            {
-                Reasons = Reasons, 
-                Value = IsSuccess ? converter(_value) : default
-            };
+            return new Result<TNewValue>()
+                .WithReasons(Reasons)
+                .WithValue(IsSuccess ? converter(_value) : default);
         }
 
+#if NET5_0_OR_GREATER
+        
         public override Result<TValue> WithReason(IReason reason) => 
             (Result<TValue>) base.WithReason(reason);
         
@@ -67,7 +67,27 @@ namespace SimpleResult
         public override Result<TValue> WithErrors(params IError[] errors) => 
             (Result<TValue>) base.WithErrors(errors);
 
+#else
+        
+        public new Result<TValue> WithReason(IReason reason) => 
+            (Result<TValue>) base.WithReason(reason);
+        
+        public new Result<TValue> WithReasons(IEnumerable<IReason> reasons) => 
+            (Result<TValue>) base.WithReasons(reasons);
+        
+        public new Result<TValue> WithReasons(params IReason[] reasons) => 
+            (Result<TValue>) base.WithReasons(reasons);
+        
+        public new Result<TValue> WithError(IError error) => 
+            (Result<TValue>) base.WithError(error);
 
+        public new Result<TValue> WithErrors(IEnumerable<IError> errors) =>
+            (Result<TValue>) base.WithErrors(errors);
+        
+        public new Result<TValue> WithErrors(params IError[] errors) => 
+            (Result<TValue>) base.WithErrors(errors);
+
+#endif
         public Result<TValue> WithValue(TValue value)
         {
             Value = value;

@@ -96,8 +96,8 @@ namespace SimpleResult.Extensions
             }
             catch (Exception e)
             {
-                catchHandler ??= ResultSettings.Parameters.DefaultTryCatchHandler;
-                
+                catchHandler = catchHandler ?? ResultSettings.Parameters.DefaultTryCatchHandler;
+
                 return input.ToResult<TOutput>().WithError(catchHandler(e));
             }
         }
