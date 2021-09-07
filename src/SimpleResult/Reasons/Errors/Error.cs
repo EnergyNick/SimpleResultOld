@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if NET5_0_OR_GREATER
+using System.Collections.Generic;
 using System.Linq;
 using SimpleResult.Core;
 using SimpleResult.Core.Manipulations;
@@ -54,3 +55,5 @@ namespace SimpleResult
             this with { CausedErrors = _causedErrors.AddNewReasons(errors) };
     }
 }
+
+#endif

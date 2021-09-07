@@ -15,7 +15,9 @@ namespace SimpleResult
         public IReadOnlyList<IReason> Reasons
         {
             get => _reasons;
+#if NET5_0_OR_GREATER
             init => AddReasonsAndUpdateResult(value);
+#endif
         }
 
         public IReadOnlyList<IError> Errors => Reasons.OfType<IError>().ToList();
@@ -38,7 +40,11 @@ namespace SimpleResult
         
         public virtual Result<TNewValue> ToResult<TNewValue>(TNewValue value = default)
         {
+#if NET5_0_OR_GREATER
             return new Result<TNewValue> { Reasons = _reasons, Value = value };
+#else
+            return new Result<TNewValue>().WithReasons(_reasons).WithValue(value);
+#endif
         }
 
         public virtual Result WithReason(IReason reason)
@@ -82,7 +88,7 @@ namespace SimpleResult
         internal void AddReasonAndUpdateResult(IReason newReason)
         {
             _reasons.Add(newReason);
-            IsSuccess = IsSuccess && newReason is not IError;
+            IsSuccess = IsSuccess && !(newReason is IError);
         }
         
         internal void AddReasonsAndUpdateResult(IEnumerable<IReason> newReasons)
