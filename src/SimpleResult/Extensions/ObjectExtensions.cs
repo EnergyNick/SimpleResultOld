@@ -1,6 +1,6 @@
 ﻿namespace SimpleResult.Extensions
 {
-    public static class ObjectExtensions
+    public static class ObjectResultExtensions
     {
         public static Result<TValue> ToResult<TValue>(this TValue value)
         {
