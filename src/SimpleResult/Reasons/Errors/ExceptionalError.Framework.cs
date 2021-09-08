@@ -1,4 +1,4 @@
-#if NET5_0_OR_GREATER
+#if !NET
 using System;
 using System.Collections.Generic;
 using SimpleResult.Core;
@@ -6,9 +6,9 @@ using SimpleResult.Core.Manipulations;
 
 namespace SimpleResult
 {
-    public record ExceptionalError : Error, IExceptionalError, IExceptionalErrorManipulationMethods<ExceptionalError>
+    public class ExceptionalError : Error, IExceptionalError, IExceptionalErrorManipulationMethods<ExceptionalError>
     {
-        public Exception Exception { get; init; }
+        public Exception Exception { get; private set; }
 
         public ExceptionalError(Exception exception) 
             : base(exception.Message)
@@ -34,27 +34,36 @@ namespace SimpleResult
             Exception = exception;
         }
 
-        public ExceptionalError(ExceptionalError original) 
+        protected ExceptionalError(ExceptionalError original) 
             : base(original)
         {
             Exception = original.Exception;
         }
 
-        public override ExceptionalError WithMessage(string message) => 
+        public new ExceptionalError WithMessage(string message) => 
             (ExceptionalError) base.WithMessage(message);
 
-        public override ExceptionalError CausedBy(IError error) => 
+        public new ExceptionalError CausedBy(IError error) => 
             (ExceptionalError) base.CausedBy(error);
 
-        public override ExceptionalError CausedBy(IEnumerable<IError> errors) => 
+        public new ExceptionalError CausedBy(IEnumerable<IError> errors) => 
             (ExceptionalError) base.CausedBy(errors);
 
-        public override ExceptionalError CausedBy(params IError[] errors) => 
+        public new ExceptionalError CausedBy(params IError[] errors) => 
             (ExceptionalError) base.CausedBy(errors);
 
-        public virtual ExceptionalError CausedBy(Exception exception) =>
-            this with { Exception = exception };
+        public ExceptionalError CausedBy(Exception exception)
+        {
+            var clonedError = CloneSelf() as ExceptionalError;
+            clonedError.Exception = exception;
+            
+            return clonedError;
+        }
+
+        protected override Error CloneSelf()
+        {
+            return new ExceptionalError(this);
+        }
     }
 }
-
 #endif

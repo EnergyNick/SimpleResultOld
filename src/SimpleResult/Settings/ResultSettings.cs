@@ -28,7 +28,7 @@ namespace SimpleResult.Settings
             }
         }
         
-        public static ResultParameters GetDefaultParameters() => new()
+        public static ResultParameters GetDefaultParameters() => new ResultParameters()
         {
             DefaultTryCatchHandler = ex => new ExceptionalError(ex)
         };
