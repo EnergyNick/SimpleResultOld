@@ -10,15 +10,8 @@ namespace SimpleResult
     {
         private TValue _value;
 
-        /// <summary>
-        /// Get the Value. If result is failed then a default value is returned. Opposite see property <see cref="Value"/>.
-        /// </summary>
         public TValue ValueOrDefault => _value;
 
-        /// <summary>
-        /// Get the Value. If result is failed then an Exception is thrown because a failed result has no value.
-        /// Opposite see property <see cref="ValueOrDefault"/>.
-        /// </summary>
         public TValue Value
         {
             get
@@ -37,11 +30,11 @@ namespace SimpleResult
             }
         }
 
-        public Result()
+        public Result(TValue value = default)
         {
-            _value = default;
+            _value = value;
         }
-        
+
         public Result ToResult() => new() { Reasons = Reasons };
 
         public Result<TNewValue> ToResultWithValueConverting<TNewValue>(Func<TValue, TNewValue> converter)
