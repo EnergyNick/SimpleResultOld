@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using SimpleResult.Settings;
 
@@ -6,18 +7,18 @@ namespace SimpleResult.Extensions
 {
     public static partial class ResultsThenExtensions
     {
-        public static async Task<Result> ThenTryActionAsync(this Result input, 
+        public static async Task<Result> ThenTryAsync(this Result input, 
             Func<Task> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return await InternalTryAsync(() => input.ThenActionAsync(continuation), input.WithError, catchHandler);
+            return await InternalTryAsync(() => input.ThenAsync(continuation), input.WithError, catchHandler);
         }
 
-        public static async Task<Result<TOutput>> ThenTryActionAsync<TOutput>(this Result<TOutput> input, 
+        public static async Task<Result<TOutput>> ThenTryAsync<TOutput>(this Result<TOutput> input, 
             Func<TOutput, Task> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return await InternalTryAsync(() => input.ThenActionAsync(continuation), input.WithError, catchHandler);
+            return await InternalTryAsync(() => input.ThenAsync(continuation), input.WithError, catchHandler);
         }
 
         public static async Task<Result<TOutput>> ThenTryAsync<TOutput>(this Result input, 
@@ -56,6 +57,7 @@ namespace SimpleResult.Extensions
                 catchHandler);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static async Task<TOutput> InternalTryAsync<TOutput>(Func<Task<TOutput>> action,
             Func<Error, TOutput> onErrorAction,
             Func<Exception, Error> catchHandler)

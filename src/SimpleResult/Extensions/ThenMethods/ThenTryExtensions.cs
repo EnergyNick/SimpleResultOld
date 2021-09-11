@@ -5,18 +5,18 @@ namespace SimpleResult.Extensions
 {
     public static partial class ResultsThenExtensions
     {
-        public static Result ThenTryAction(this Result input, 
+        public static Result ThenTry(this Result input, 
             Action continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry(() => input.ThenAction(continuation), input.WithError, catchHandler);
+            return InternalTry(() => input.Then(continuation), input.WithError, catchHandler);
         }
 
-        public static Result<TOutput> ThenTryAction<TOutput>(this Result<TOutput> input, 
+        public static Result<TOutput> ThenTry<TOutput>(this Result<TOutput> input, 
             Action<TOutput> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry(() => input.ThenAction(continuation), input.WithError, catchHandler);
+            return InternalTry(() => input.Then(continuation), input.WithError, catchHandler);
         }
 
         public static Result<TOutput> ThenTry<TOutput>(this Result input, 
