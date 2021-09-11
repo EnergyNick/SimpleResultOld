@@ -24,7 +24,7 @@ namespace SimpleResult.Extensions
             Func<Task<TOutput>> continuation)
         {
             return input.IsSuccess
-                ? Result.Success(await continuation())
+                ? Result.Ok(await continuation())
                 : input.ToResult<TOutput>();
         }
         
@@ -40,7 +40,7 @@ namespace SimpleResult.Extensions
             Func<TInput, Task<TOutput>> continuation)
         {
             return input.IsSuccess
-                ? Result.Success(await continuation(input.ValueOrDefault))
+                ? Result.Ok(await continuation(input.ValueOrDefault))
                 : input.ToResult<TOutput>();
         }
         

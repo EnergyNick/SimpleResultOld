@@ -10,7 +10,7 @@ namespace SimpleResult
         /// <summary>
         /// Create empty result with success status
         /// </summary>
-        public static Result Success() => new();
+        public static Result Ok() => new();
 
         /// <summary>
         /// Creates a failed result with the given error
@@ -32,7 +32,7 @@ namespace SimpleResult
         /// <summary>
         /// Creates a success result with the given value
         /// </summary>
-        public static Result<TValue> Success<TValue>(TValue value = default)
+        public static Result<TValue> Ok<TValue>(TValue value = default)
         {
             return new Result<TValue> { Value = value };
         }
@@ -72,7 +72,7 @@ namespace SimpleResult
             try
             {
                 action();
-                return Success();
+                return Ok();
             }
             catch (Exception e)
             {
@@ -91,7 +91,7 @@ namespace SimpleResult
             try
             {
                 await action();
-                return Success();
+                return Ok();
             }
             catch (Exception e)
             {
@@ -109,7 +109,7 @@ namespace SimpleResult
         {
             try
             {
-                return Success(action());
+                return Ok(action());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace SimpleResult
         {
             try
             {
-                return Success(await action());
+                return Ok(await action());
             }
             catch (Exception e)
             {
