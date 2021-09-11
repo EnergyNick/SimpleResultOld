@@ -86,7 +86,7 @@ namespace SimpleResult
         /// Executes the async action and catch all exceptions, If they will be thrown within the action.
         /// Exception transforming to Error by <see cref="catchHandler"/> or by default catch handler from <see cref="ResultSettings.Parameters"/> 
         /// </summary>
-        public static async Task<Result> Try(Func<Task> action, Func<Exception, Error> catchHandler = null)
+        public static async Task<Result> TryAsync(Func<Task> action, Func<Exception, Error> catchHandler = null)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace SimpleResult
         /// Executes the async action with return value and catch all exceptions, If they will be thrown within the action.
         /// Exception transforming to Error by <see cref="catchHandler"/> or by default catch handler from <see cref="ResultSettings.Parameters"/> 
         /// </summary>
-        public static async Task<Result<T>> Try<T>(Func<Task<T>> action, Func<Exception, Error> catchHandler = null)
+        public static async Task<Result<T>> TryAsync<T>(Func<Task<T>> action, Func<Exception, Error> catchHandler = null)
         {
             try
             {
