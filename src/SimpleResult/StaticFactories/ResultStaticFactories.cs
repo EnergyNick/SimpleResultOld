@@ -34,7 +34,7 @@ namespace SimpleResult
         /// </summary>
         public static Result<TValue> Ok<TValue>(TValue value = default)
         {
-            return new Result<TValue> { Value = value };
+            return new Result<TValue>(value);
         }
         
         /// <summary>
