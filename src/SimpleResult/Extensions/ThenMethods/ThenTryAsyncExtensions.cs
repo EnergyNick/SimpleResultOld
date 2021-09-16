@@ -11,21 +11,21 @@ namespace SimpleResult.Extensions
             Func<Task> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return await InternalTryAsync(() => input.ThenAsync(continuation), input.WithError, catchHandler);
+            return await InternalTryAsync(continuation, input.ThenAsync, input.WithError, catchHandler);
         }
 
         public static async Task<Result<TOutput>> ThenTryAsync<TOutput>(this Result<TOutput> input, 
             Func<TOutput, Task> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return await InternalTryAsync(() => input.ThenAsync(continuation), input.WithError, catchHandler);
+            return await InternalTryAsync(continuation, input.ThenAsync, input.WithError, catchHandler);
         }
 
         public static async Task<Result<TOutput>> ThenTryAsync<TOutput>(this Result input, 
             Func<Task<TOutput>> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return await InternalTryAsync(() => input.ThenAsync(continuation), 
+            return await InternalTryAsync(continuation, input.ThenAsync, 
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error),
                 catchHandler);
         }
@@ -34,7 +34,7 @@ namespace SimpleResult.Extensions
             Func<Task<Result<TOutput>>> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return await InternalTryAsync(() => input.ThenAsync(continuation), 
+            return await InternalTryAsync(continuation, input.ThenAsync,  
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error),
                 catchHandler);
         }
@@ -43,7 +43,7 @@ namespace SimpleResult.Extensions
             Func<TInput, Task<Result<TOutput>>> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return await InternalTryAsync(() => input.ThenAsync(continuation), 
+            return await InternalTryAsync(continuation, input.ThenAsync,  
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error), 
                 catchHandler);
         }
@@ -52,19 +52,20 @@ namespace SimpleResult.Extensions
             Func<TInput, Task<TOutput>> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return await InternalTryAsync(() => input.ThenAsync(continuation), 
+            return await InternalTryAsync(continuation, input.ThenAsync, 
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error), 
                 catchHandler);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static async Task<TOutput> InternalTryAsync<TOutput>(Func<Task<TOutput>> action,
+        private static async Task<TOutput> InternalTryAsync<TInput, TOutput>(TInput argument, 
+            Func<TInput, Task<TOutput>> action,
             Func<Error, TOutput> onErrorAction,
             Func<Exception, Error> catchHandler)
         {
             try
             {
-                return await action();
+                return await action(argument);
             }
             catch (Exception e)
             {
