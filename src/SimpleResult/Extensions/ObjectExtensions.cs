@@ -6,7 +6,7 @@
         {
             return value is Result result 
                 ? result.ToResult(value) 
-                : Result.Success(value);
+                : Result.Ok(value);
         }
     }
 }

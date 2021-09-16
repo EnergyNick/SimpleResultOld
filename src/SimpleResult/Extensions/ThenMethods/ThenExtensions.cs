@@ -4,14 +4,14 @@ namespace SimpleResult.Extensions
 {
     public static partial class ResultsThenExtensions
     {
-        public static Result ThenAction(this Result input, Action continuation)
+        public static Result Then(this Result input, Action continuation)
         {
             if (input.IsSuccess)
                 continuation();
             return input;
         }
 
-        public static Result<TValue> ThenAction<TValue>(this Result<TValue> input, Action<TValue> continuation)
+        public static Result<TValue> Then<TValue>(this Result<TValue> input, Action<TValue> continuation)
         {
             if (input.IsSuccess)
                 continuation(input.ValueOrDefault);

@@ -5,14 +5,14 @@ namespace SimpleResult.Extensions
 {
     public static partial class ResultsThenExtensions
     {
-        public static async Task<Result> ThenActionAsync(this Result input, Func<Task> continuation)
+        public static async Task<Result> ThenAsync(this Result input, Func<Task> continuation)
         {
             if (input.IsSuccess)
                 await continuation();
             return input;
         }
 
-        public static async Task<Result<TValue>> ThenActionAsync<TValue>(this Result<TValue> input, 
+        public static async Task<Result<TValue>> ThenAsync<TValue>(this Result<TValue> input, 
             Func<TValue, Task> continuation)
         {
             if (input.IsSuccess)
@@ -24,7 +24,7 @@ namespace SimpleResult.Extensions
             Func<Task<TOutput>> continuation)
         {
             return input.IsSuccess
-                ? Result.Success(await continuation())
+                ? Result.Ok(await continuation())
                 : input.ToResult<TOutput>();
         }
         
@@ -40,7 +40,7 @@ namespace SimpleResult.Extensions
             Func<TInput, Task<TOutput>> continuation)
         {
             return input.IsSuccess
-                ? Result.Success(await continuation(input.ValueOrDefault))
+                ? Result.Ok(await continuation(input.ValueOrDefault))
                 : input.ToResult<TOutput>();
         }
         

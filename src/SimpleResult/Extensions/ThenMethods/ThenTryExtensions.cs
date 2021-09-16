@@ -5,25 +5,25 @@ namespace SimpleResult.Extensions
 {
     public static partial class ResultsThenExtensions
     {
-        public static Result ThenTryAction(this Result input, 
+        public static Result ThenTry(this Result input, 
             Action continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry(() => input.ThenAction(continuation), input.WithError, catchHandler);
+            return InternalTry(continuation, input.Then, input.WithError, catchHandler);
         }
 
-        public static Result<TOutput> ThenTryAction<TOutput>(this Result<TOutput> input, 
+        public static Result<TOutput> ThenTry<TOutput>(this Result<TOutput> input, 
             Action<TOutput> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry(() => input.ThenAction(continuation), input.WithError, catchHandler);
+            return InternalTry(continuation, input.Then, input.WithError, catchHandler);
         }
 
         public static Result<TOutput> ThenTry<TOutput>(this Result input, 
             Func<TOutput> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry(() => input.Then(continuation), 
+            return InternalTry(continuation, input.Then, 
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error),
                 catchHandler);
         }
@@ -32,7 +32,7 @@ namespace SimpleResult.Extensions
             Func<Result<TOutput>> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry(() => input.Then(continuation), 
+            return InternalTry(continuation, input.Then, 
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error),
                 catchHandler);
         }
@@ -41,7 +41,7 @@ namespace SimpleResult.Extensions
             Func<TInput, Result<TOutput>> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry(() => input.Then(continuation), 
+            return InternalTry(continuation, input.Then, 
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error), 
                 catchHandler);
         }
@@ -50,19 +50,19 @@ namespace SimpleResult.Extensions
             Func<TInput, TOutput> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry(() => input.Then(continuation), 
+            return InternalTry(continuation, input.Then, 
                 error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error), 
                 catchHandler);
         }
 
-
-        private static TOutput InternalTry<TOutput>(Func<TOutput> action,
+        private static TOutput InternalTry<TInput, TOutput>(in TInput argument, 
+            Func<TInput, TOutput> action,
             Func<Error, TOutput> onErrorAction,
             Func<Exception, Error> catchHandler)
         {
             try
             {
-                return action();
+                return action(argument);
             }
             catch (Exception e)
             {

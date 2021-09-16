@@ -10,7 +10,7 @@ namespace SimpleResult
         /// <summary>
         /// Create empty result with success status
         /// </summary>
-        public static Result Success() => new();
+        public static Result Ok() => new();
 
         /// <summary>
         /// Creates a failed result with the given error
@@ -32,9 +32,9 @@ namespace SimpleResult
         /// <summary>
         /// Creates a success result with the given value
         /// </summary>
-        public static Result<TValue> Success<TValue>(TValue value = default)
+        public static Result<TValue> Ok<TValue>(TValue value = default)
         {
-            return new Result<TValue> { Value = value };
+            return new Result<TValue>(value);
         }
         
         /// <summary>
@@ -72,7 +72,7 @@ namespace SimpleResult
             try
             {
                 action();
-                return Success();
+                return Ok();
             }
             catch (Exception e)
             {
@@ -86,12 +86,12 @@ namespace SimpleResult
         /// Executes the async action and catch all exceptions, If they will be thrown within the action.
         /// Exception transforming to Error by <see cref="catchHandler"/> or by default catch handler from <see cref="ResultSettings.Parameters"/> 
         /// </summary>
-        public static async Task<Result> Try(Func<Task> action, Func<Exception, Error> catchHandler = null)
+        public static async Task<Result> TryAsync(Func<Task> action, Func<Exception, Error> catchHandler = null)
         {
             try
             {
                 await action();
-                return Success();
+                return Ok();
             }
             catch (Exception e)
             {
@@ -109,7 +109,7 @@ namespace SimpleResult
         {
             try
             {
-                return Success(action());
+                return Ok(action());
             }
             catch (Exception e)
             {
@@ -123,11 +123,11 @@ namespace SimpleResult
         /// Executes the async action with return value and catch all exceptions, If they will be thrown within the action.
         /// Exception transforming to Error by <see cref="catchHandler"/> or by default catch handler from <see cref="ResultSettings.Parameters"/> 
         /// </summary>
-        public static async Task<Result<T>> Try<T>(Func<Task<T>> action, Func<Exception, Error> catchHandler = null)
+        public static async Task<Result<T>> TryAsync<T>(Func<Task<T>> action, Func<Exception, Error> catchHandler = null)
         {
             try
             {
-                return Success(await action());
+                return Ok(await action());
             }
             catch (Exception e)
             {
