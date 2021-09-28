@@ -9,66 +9,95 @@ namespace SimpleResult.Extensions
             Action continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry(continuation, input.Then, input.WithError, catchHandler);
+            try
+            {
+                return input.Then(continuation);
+            }
+            catch (Exception e)
+            {
+                catchHandler ??= ResultSettings.Parameters.DefaultTryCatchHandler;
+                
+                return input.WithError(catchHandler(e));
+            }
         }
 
         public static Result<TOutput> ThenTry<TOutput>(this Result<TOutput> input, 
             Action<TOutput> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry(continuation, input.Then, input.WithError, catchHandler);
+            try
+            {
+                return input.Then(continuation);
+            }
+            catch (Exception e)
+            {
+                catchHandler ??= ResultSettings.Parameters.DefaultTryCatchHandler;
+                
+                return input.WithError(catchHandler(e));
+            }
         }
 
         public static Result<TOutput> ThenTry<TOutput>(this Result input, 
             Func<TOutput> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry(continuation, input.Then, 
-                error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error),
-                catchHandler);
+            try
+            {
+                return input.Then(continuation);
+            }
+            catch (Exception e)
+            {
+                catchHandler ??= ResultSettings.Parameters.DefaultTryCatchHandler;
+                
+                return input.ToResult<TOutput>().WithError(catchHandler(e));
+            }
         }
         
         public static Result<TOutput> ThenTry<TOutput>(this Result input, 
             Func<Result<TOutput>> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry(continuation, input.Then, 
-                error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error),
-                catchHandler);
+            try
+            {
+                return input.Then(continuation);
+            }
+            catch (Exception e)
+            {
+                catchHandler ??= ResultSettings.Parameters.DefaultTryCatchHandler;
+                
+                return input.ToResult<TOutput>().WithError(catchHandler(e));
+            }
         }
         
         public static Result<TOutput> ThenTry<TInput, TOutput>(this Result<TInput> input,
             Func<TInput, Result<TOutput>> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry(continuation, input.Then, 
-                error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error), 
-                catchHandler);
+            try
+            {
+                return input.Then(continuation);
+            }
+            catch (Exception e)
+            {
+                catchHandler ??= ResultSettings.Parameters.DefaultTryCatchHandler;
+                
+                return input.ToResult<TOutput>().WithError(catchHandler(e));
+            }
         }
 
         public static Result<TOutput> ThenTry<TInput, TOutput>(this Result<TInput> input,
             Func<TInput, TOutput> continuation,
             Func<Exception, Error> catchHandler = null)
         {
-            return InternalTry(continuation, input.Then, 
-                error => new Result<TOutput>().WithReasons(input.Reasons).WithError(error), 
-                catchHandler);
-        }
-
-        private static TOutput InternalTry<TInput, TOutput>(in TInput argument, 
-            Func<TInput, TOutput> action,
-            Func<Error, TOutput> onErrorAction,
-            Func<Exception, Error> catchHandler)
-        {
             try
             {
-                return action(argument);
+                return input.Then(continuation);
             }
             catch (Exception e)
             {
                 catchHandler ??= ResultSettings.Parameters.DefaultTryCatchHandler;
-
-                return onErrorAction(catchHandler(e));
+                
+                return input.ToResult<TOutput>().WithError(catchHandler(e));
             }
         }
     }
