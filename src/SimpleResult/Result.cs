@@ -40,11 +40,7 @@ namespace SimpleResult
         
         public virtual Result<TNewValue> ToResult<TNewValue>(TNewValue value = default)
         {
-#if NET5_0_OR_GREATER
-            return new Result<TNewValue> { Reasons = _reasons, Value = value };
-#else
             return new Result<TNewValue>().WithReasons(_reasons).WithValue(value);
-#endif
         }
 
         public virtual Result WithReason(IReason reason)
