@@ -66,7 +66,7 @@ namespace SimpleResult.ReadOnly
 
         /// <summary>
         /// Executes the action and catch all exceptions, If they will be thrown within the action.
-        /// Exception transforming to Error by <see cref="catchHandler"/> or by default catch handler from <see cref="ReadOnlyResultSettings.Parameters"/> 
+        /// Exception transforming to Error by <see cref="catchHandler"/> or by default catch handler from <see cref="ResultSettings.Parameters"/> 
         /// </summary>
         public static ReadOnlyResult Try(Action action, Func<Exception, Error> catchHandler = null)
         {
@@ -85,7 +85,7 @@ namespace SimpleResult.ReadOnly
 
         /// <summary>
         /// Executes the async action and catch all exceptions, If they will be thrown within the action.
-        /// Exception transforming to Error by <see cref="catchHandler"/> or by default catch handler from <see cref="ReadOnlyResultSettings.Parameters"/> 
+        /// Exception transforming to Error by <see cref="catchHandler"/> or by default catch handler from <see cref="ResultSettings.Parameters"/> 
         /// </summary>
         public static async Task<ReadOnlyResult> Try(Func<Task> action, Func<Exception, Error> catchHandler = null)
         {
@@ -104,7 +104,7 @@ namespace SimpleResult.ReadOnly
 
         /// <summary>
         /// Executes the action with return value and catch all exceptions, If they will be thrown within the action.
-        /// Exception transforming to Error by <see cref="catchHandler"/> or by default catch handler from <see cref="ReadOnlyResultSettings.Parameters"/> 
+        /// Exception transforming to Error by <see cref="catchHandler"/> or by default catch handler from <see cref="ResultSettings.Parameters"/> 
         /// </summary>
         public static ReadOnlyResult<T> Try<T>(Func<T> action, Func<Exception, Error> catchHandler = null)
         {
@@ -122,7 +122,7 @@ namespace SimpleResult.ReadOnly
 
         /// <summary>
         /// Executes the async action with return value and catch all exceptions, If they will be thrown within the action.
-        /// Exception transforming to Error by <see cref="catchHandler"/> or by default catch handler from <see cref="ReadOnlyResultSettings.Parameters"/> 
+        /// Exception transforming to Error by <see cref="catchHandler"/> or by default catch handler from <see cref="ResultSettings.Parameters"/> 
         /// </summary>
         public static async Task<ReadOnlyResult<T>> Try<T>(Func<Task<T>> action, Func<Exception, Error> catchHandler = null)
         {

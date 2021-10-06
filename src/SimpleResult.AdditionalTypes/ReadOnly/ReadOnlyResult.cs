@@ -35,7 +35,7 @@ namespace SimpleResult.ReadOnly
         /// <summary>
         /// Use method for only create correct Manipulator type, don't use type non static fields 
         /// </summary>
-        protected virtual ReadonlyResultManipulator GetResultManipulator() => new(this);
+        protected virtual ReadonlyResultManipulator CreateResultManipulator() => new(this);
 
 
         public IReadOnlyList<IError> Errors => Reasons.OfType<IError>().ToList();
@@ -45,7 +45,7 @@ namespace SimpleResult.ReadOnly
             _reasons = new List<IReason>();
             IsSuccess = true;
             
-            Manipulator = GetResultManipulator();
+            Manipulator = CreateResultManipulator();
         }
 
         // Copy constructor
@@ -54,7 +54,7 @@ namespace SimpleResult.ReadOnly
             _reasons = new List<IReason>(original._reasons);
             IsSuccess = original.IsSuccess;
 
-            Manipulator = GetResultManipulator();
+            Manipulator = CreateResultManipulator();
         }
         
         public ReadOnlyResult(IResult original)
@@ -62,7 +62,7 @@ namespace SimpleResult.ReadOnly
             _reasons = new List<IReason>(original.Reasons);
             IsSuccess = original.IsSuccess;
 
-            Manipulator = GetResultManipulator();
+            Manipulator = CreateResultManipulator();
         }
         
         public ReadOnlyResult<TNewValue> ToResult<TNewValue>(TNewValue value = default)
