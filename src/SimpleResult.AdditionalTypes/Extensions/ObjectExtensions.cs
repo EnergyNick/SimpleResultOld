@@ -8,7 +8,7 @@ namespace SimpleResult.Extensions
         {
             return value is Result result 
                 ? new ReadOnlyResult<TValue> {Reasons = result.Reasons, Value = value}
-                : ReadOnly.ReadOnlyResult.Success(value);
+                : ReadOnlyResult.Success(value);
         }
     }
 }

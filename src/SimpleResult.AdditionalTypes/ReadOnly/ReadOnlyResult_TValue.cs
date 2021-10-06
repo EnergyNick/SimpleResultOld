@@ -27,7 +27,7 @@ namespace SimpleResult.ReadOnly
             }
         }
         
-        protected override ReadonlyResultManipulator GetResultManipulator() =>
+        protected override ReadonlyResultManipulator CreateResultManipulator() =>
             new ReadonlyResultManipulator<TValue>(this);
         public override ReadonlyResultManipulator<TValue> Copy => (ReadonlyResultManipulator<TValue>) Manipulator;
 
