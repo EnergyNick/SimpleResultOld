@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using SimpleResult.Core;
 using SimpleResult.Core.Manipulations;
 
@@ -72,6 +73,18 @@ namespace SimpleResult
             clonedError._causedErrors.AddRange(errors);
             
             return clonedError;
+        }
+
+        public override string ToString()
+        {
+            return Serializer.BuildStringRepresentation(this, BuildFieldsStringRepresentation);
+        }
+        
+        protected virtual void BuildFieldsStringRepresentation(StringBuilder builder)
+        {
+            builder.Append($"Message = {Message}, ");
+            if(_causedErrors.Count != 0)
+                builder.Append($"Caused errors count = {_causedErrors.Count}");
         }
 
         protected virtual Error CloneSelf()

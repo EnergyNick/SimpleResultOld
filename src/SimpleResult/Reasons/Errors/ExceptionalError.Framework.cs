@@ -1,6 +1,7 @@
 #if !NET
 using System;
 using System.Collections.Generic;
+using System.Text;
 using SimpleResult.Core;
 using SimpleResult.Core.Manipulations;
 
@@ -38,6 +39,12 @@ namespace SimpleResult
             : base(original)
         {
             Exception = original.Exception;
+        }
+
+        protected override void BuildFieldsStringRepresentation(StringBuilder builder)
+        {
+            base.BuildFieldsStringRepresentation(builder);
+            builder.Append($"Exception = {Exception}");
         }
 
         public new ExceptionalError WithMessage(string message) => 
