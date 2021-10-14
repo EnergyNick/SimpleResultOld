@@ -23,22 +23,27 @@ namespace SimpleResult.StringBuilders
         }
 
         protected virtual string CreateStringRepresentation<TResult>(TResult result, 
-            Func<TResult, StringBuilder, bool> membersAppending)
+            Func<TResult, StringBuilder, bool> valueMember)
             where TResult : IResult
         {
             var builder = new StringBuilder();
-            builder.Append($"{GetNameOfResultType<TResult>()}: IsSuccess={result.IsSuccess} ");
+            builder.Append($"{GetNameOfResultType<TResult>()}[{result.IsSuccess}]: ");
 
             builder.Append("{");
+
+            var isAddedValueMember = valueMember?.Invoke(result, builder) ?? false;
+            var previousStartIndex = builder.Length;
             
-            if(membersAppending?.Invoke(result, builder) ?? false)
-                builder.Append(", ");
-
-            if (result.Reasons.Count != 0) 
+            if (result.Reasons.Count != 0)
+            {
                 PrintReasons(result, builder);
-
+                if(isAddedValueMember)
+                    builder.Insert(previousStartIndex, ", ");
+            }
+            
+            previousStartIndex = builder.Length;
             if(PrintAdditionalInfo(result, builder))
-                builder.Append(" ");
+                builder.Insert(previousStartIndex, ", ");
             
             builder.Append("}");
             return builder.ToString();
@@ -47,7 +52,7 @@ namespace SimpleResult.StringBuilders
         /// <summary>
         /// Method for printing value of typed <see cref="IResult{TValue}"/>
         /// </summary>
-        /// <returns>Is space with comma required after block</returns>
+        /// <returns>Is added any info</returns>
         protected virtual bool AddValueForResult<TResult, TValue>(TResult result, StringBuilder builder) 
             where TResult : IResult<TValue>
         {
@@ -75,7 +80,7 @@ namespace SimpleResult.StringBuilders
         /// <summary>
         /// Provide for info printing of custom Result.
         /// </summary>
-        /// <returns>Is space required after block</returns>
+        /// <returns>Is added any info</returns>
         protected virtual bool PrintAdditionalInfo<TResult>(TResult result, StringBuilder builder)
             where TResult : IResult
         {
