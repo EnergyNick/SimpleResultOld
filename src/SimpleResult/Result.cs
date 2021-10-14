@@ -4,6 +4,7 @@ using System.Linq;
 using SimpleResult.Core;
 using SimpleResult.Core.Manipulations;
 using SimpleResult.Extensions;
+using SimpleResult.StringBuilders;
 
 namespace SimpleResult
 {
@@ -78,6 +79,8 @@ namespace SimpleResult
             return this;
         }
 
+        protected static readonly IResultStringBuilder DefaultStringBuilder = new DefaultResultStringBuilder();
+        public override string ToString() => DefaultStringBuilder.ConvertToString(this);
 
         internal void AddReasonAndUpdateResult(IReason newReason)
         {

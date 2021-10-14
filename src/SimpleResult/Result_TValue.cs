@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using SimpleResult.Core;
 using SimpleResult.Core.Manipulations;
 using SimpleResult.Exceptions;
+using SimpleResult.Settings;
+using SimpleResult.StringBuilders;
 
 namespace SimpleResult
 {
@@ -73,6 +75,10 @@ namespace SimpleResult
             Value = value;
             return this;
         }
+
+        public override string ToString() =>
+            DefaultStringBuilder.ConvertToStringWithValue<Result<TValue>, TValue>(this);
+
 
         IResult IResult<TValue>.ToResult() => ToResult();
 
