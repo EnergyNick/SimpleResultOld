@@ -1,4 +1,5 @@
 ﻿using System;
+#pragma warning disable CS1573
 
 namespace SimpleResult.Exceptions
 {
@@ -14,22 +15,29 @@ namespace SimpleResult.Exceptions
             var message = ExceptionMessage;
             if (operationName != null)
                 message += $": {operationName}.";
-            
+
             return message;
         }
 
+        /// <inheritdoc />
+        /// <param name="operationName">Name of operation, that threw the exception</param>
         public OperationOnFailedResultException(string operationName) : base(FailedResultMessage(operationName))
         { }
 
-        public OperationOnFailedResultException(string operationName, Exception innerException) 
+        /// <inheritdoc />
+        /// <param name="operationName">Name of operation, that threw the exception</param>
+        public OperationOnFailedResultException(string operationName, Exception innerException)
             : base(FailedResultMessage(operationName), innerException)
         { }
-        
-        public OperationOnFailedResultException(string message, string operationName) 
+
+        /// <inheritdoc />
+        /// <param name="operationName">Name of operation, that threw the exception</param>
+        public OperationOnFailedResultException(string message, string operationName)
             : base(FailedResultMessage(operationName) + message)
         { }
 
-        public OperationOnFailedResultException(string message, string operationName, Exception innerException) 
+        /// <inheritdoc />
+        public OperationOnFailedResultException(string message, string operationName, Exception innerException)
             : base(FailedResultMessage(operationName) + message, innerException)
         { }
     }

@@ -7,6 +7,9 @@ namespace SimpleResult.Core
     /// </summary>
     public interface ISuccess : IReason
     {
+        /// <summary>
+        /// Additional data from method, use only for utilities
+        /// </summary>
         IReadOnlyDictionary<string, object> Metadata { get; }
     }
 }

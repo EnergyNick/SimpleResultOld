@@ -27,11 +27,11 @@ namespace SimpleResult.Extensions
         {
             if (result.IsSuccess)
                 return result;
-            
+
             onFailAction(result);
             return result;
         }
-        
+
         /// <summary>
         /// Call action only if <see cref="result"/> is failed
         /// </summary>
@@ -40,7 +40,7 @@ namespace SimpleResult.Extensions
         {
             if (result.IsSuccess)
                 return result;
-            
+
             onFailAction(result, result.Errors);
             return result;
         }

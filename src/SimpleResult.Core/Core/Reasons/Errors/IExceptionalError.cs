@@ -7,6 +7,9 @@ namespace SimpleResult.Core
     /// </summary>
     public interface IExceptionalError : IError
     {
+        /// <summary>
+        /// Caused exception from operation
+        /// </summary>
         Exception Exception { get; }
     }
 }

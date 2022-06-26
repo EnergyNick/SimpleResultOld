@@ -22,7 +22,7 @@ namespace SimpleResult.Core.Manipulations
         /// Set the root cause of the error
         /// </summary>
         TError CausedBy(IEnumerable<IError> errors);
-        
+
         /// <summary>
         /// Set the root cause of the error
         /// </summary>
