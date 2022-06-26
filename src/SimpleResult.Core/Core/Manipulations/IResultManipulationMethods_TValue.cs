@@ -1,7 +1,7 @@
 ﻿namespace SimpleResult.Core.Manipulations
 {
     /// <summary>
-    /// Providing methods for fluent work with <see cref="IResult{TValue}"/>
+    /// Providing methods of fluent api for <see cref="IResult{TValue}"/>
     /// </summary>
     public interface IResultManipulationMethods<out TResult, in TValue> : IResultManipulationMethods<TResult>
         where TResult : IResult<TValue>

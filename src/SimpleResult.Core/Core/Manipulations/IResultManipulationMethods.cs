@@ -3,10 +3,10 @@
 namespace SimpleResult.Core.Manipulations
 {
     /// <summary>
-    /// Providing methods for fluent work with <see cref="IResult"/>
+    /// Providing methods of fluent api for <see cref="IResult"/>
     /// </summary>
     public interface IResultManipulationMethods<out TResult>
-        where TResult : IResult
+        where TResult : IConclusion
     {
         /// <summary>
         /// 
@@ -26,7 +26,7 @@ namespace SimpleResult.Core.Manipulations
         /// <param name="reasons"></param>
         /// <returns></returns>
         TResult WithReasons(params IReason[] reasons);
-        
+
         /// <summary>
         /// 
         /// </summary>
