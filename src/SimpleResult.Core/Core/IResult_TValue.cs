@@ -6,7 +6,7 @@ namespace SimpleResult.Core
     /// <summary>
     /// Represent result of operation with returning value
     /// </summary>
-    /// <typeparam name="TValue"></typeparam>
+    /// <typeparam name="TValue">Attached returning value of operation</typeparam>
     public interface IResult<out TValue> : IConclusion
     {
         /// <summary>
@@ -23,11 +23,14 @@ namespace SimpleResult.Core
         /// <summary>
         /// Provide conversion to <see cref="IResult"/> with same reasons
         /// </summary>
+        /// <returns>Copy of current result  </returns>
         IResult ToResult();
 
         /// <summary>
         /// Provide conversion to <see cref="IResult{TValue}"/> with value changing
         /// </summary>
+        /// <param name="converter"></param>
+        /// <returns></returns>
         IResult<TNewValue> ToResult<TNewValue>(Func<TValue, TNewValue> converter);
     }
 }
